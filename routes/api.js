@@ -59,6 +59,58 @@ router.get('/cekapikey', async (req, res, next) => {
     });
 })
 // cecan
+router.get('/cecan/random', async (req, res, next) => {
+    var apikey = req.query.apikey
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    var data = `https://api.xyroinee.xyz/api/asupan/image/malaysia?apikey=dlpKRiExS2`
+    var requestSettings = {
+        url: data,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    });
+    limitAdd(apikey);
+})
+router.get('/cecan/indonesia', async (req, res, next) => {
+    var apikey = req.query.apikey
+    if (!apikey) return res.json(loghandler.noapikey)
+    const check = await cekKey(apikey);
+    if (!check) return res.status(403).send({
+        status: 403,
+        message: `apikey ${apikey} not found, please register first! https://${req.hostname}/users/signup`,
+        result: "error"
+    });
+    let limit = await isLimit(apikey);
+    if (limit) return res.status(403).send({
+        status: 403,
+        message: 'your limit has been exhausted, reset every 12 PM'
+    });
+    var data = `https://api.xyroinee.xyz/api/asupan/image/indonesia?apikey=dlpKRiExS2`
+    var requestSettings = {
+        url: data,
+        method: 'GET',
+        encoding: null
+    };
+    request(requestSettings, function (error, response, body) {
+        res.set('Content-Type', 'image/png');
+        res.send(body);
+    });
+    limitAdd(apikey);
+})
 router.get('/cecan/china', async (req, res, next) => {
     var apikey = req.query.apikey
     if (!apikey) return res.json(loghandler.noapikey)
