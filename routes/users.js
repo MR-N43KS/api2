@@ -27,7 +27,7 @@ router.get('/login', notAuthenticated, (req, res) => {
 
 router.post('/login', async (req, res, next) => {
    passport.authenticate('local', {
-      successRedirect: '/dashboard',
+      successRedirect: '/docs',
       failureRedirect: '/users/login',
       failureFlash: `<div class="alert alert-danger">
                   <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
